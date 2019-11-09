@@ -1,9 +1,11 @@
 using Distributed
 
-workervec = [("ubuntu@18.221.214.62", 1)]
-addprocs(workervec; sshflags=`-i /home/moxnox/tdl-2c2019/JuliaServer.pem`, tunnel=true, exename=`/usr/local/bin/julia`)
-
+workervec = [("ubuntu@18.221.214.62:22", 1)]
+addprocs(workervec; sshflags=`-i ./JuliaServer.pem`, tunnel=true, exename=`/home/ubuntu/julia-1.2.0/bin/julia`)
 @everywhere using Distributed
+@everywhere import Pkg
+@everywhere Pkg.instantiate()
+@everywhere Pkg.add("PyCall")
 @everywhere using PyCall
 @everywhere @pyimport socket
 println(workers())
