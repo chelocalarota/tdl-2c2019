@@ -8,7 +8,7 @@ addprocs(2)
 @everywhere foo = pyimport("socket")
 println(workers())
 
-@everywhere @sync function listenChannel(channel)
+@everywhere function listenChannel(channel)
 	println("Listen Started")
 	id = 1
 	while(id != -1)
@@ -26,7 +26,7 @@ x = [@spawnat i listenChannel(channel) for i in workers()]
 #pero ahora populo el canal para que los procesos extraigan del canal
 function fillChannel(channel, size)
 	for i=1:size
-		put!(channel, string("Elemento: ", size))
+		put!(channel, string("Elemento: ", i))
 	end
 
 	for i=1:length(workers())
@@ -34,6 +34,7 @@ function fillChannel(channel, size)
 	end
 end
 
+sleep(10)
 println("filling the channel")
 fillChannel(channel, 4)
 #detener los procesos
