@@ -5,8 +5,8 @@ addprocs(workervec; sshflags=`-i ./JuliaServer.pem`, tunnel=true, exename=`/home
 addprocs(2)
 @everywhere using Distributed
 @everywhere using PyCall
-@everywhere foo = pyimport("socket")
-println(workers())
+@everywhere socket = pyimport("socket")
+println("Qty workers: ", workers())
 
 @everywhere function listenChannel(channel)
 	println("Listen Started")
