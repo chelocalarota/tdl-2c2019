@@ -8,7 +8,7 @@ addprocs(workervec; sshflags=`-i /home/moxnox/tdl-2c2019/JuliaServer.pem`, tunne
 addprocs(2)
 @everywhere using Distributed
 @everywhere using PyCall
-@everywhere foo = pyimport("socket")
+@everywhere socket = pyimport("socket")
 println("Qty workers: ", workers())
 
 @everywhere function printhello(data)
@@ -17,4 +17,4 @@ println("Qty workers: ", workers())
 	println(" and the data is ", data)
 end
 
-x = [@sync @spawnat i printhello(i*10) for i in workers()]
+@sync [@spawnat i printhello(i*10) for i in workers()]

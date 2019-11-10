@@ -5,7 +5,6 @@ addprocs(workervec; sshflags=`-i ./JuliaServer.pem`, tunnel=true, exename=`/home
 addprocs(2)
 @everywhere using Distributed
 @everywhere using PyCall
-@everywhere socket = pyimport("socket")
 println("Qty workers: ", workers())
 
 @everywhere function listenChannel(channel)
@@ -21,7 +20,7 @@ end
 
 #Crea un canal remoto, para el pid 1(el main process) que alojara un canal vacio de 1000 Strings
 channel = RemoteChannel(() -> Channel{String}(1000), 1)
-x = [@spawnat i listenChannel(channel) for i in workers()]
+[@spawnat i listenChannel(channel) for i in workers()]
 
 #pero ahora populo el canal para que los procesos extraigan del canal
 function fillChannel(channel, size)
@@ -34,8 +33,6 @@ function fillChannel(channel, size)
 	end
 end
 
-sleep(10)
 println("filling the channel")
-fillChannel(channel, 4)
-#detener los procesos
-interrupt(workers())
+fillChannel(channel, 16)
+sleep(20)
