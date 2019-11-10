@@ -1,7 +1,7 @@
 using Distributed
 
 workervec = [("ubuntu@18.221.214.62:22", 2)]
-addprocs(workervec; sshflags=`-i ./JuliaServer.pem`, tunnel=true, exename=`/home/ubuntu/julia-1.2.0/bin/julia`)
+addprocs(workervec; sshflags=`-i ./JuliaServer.pem`, tunnel=true, exename=`/home/ubuntu/julia-1.2.0/bin/julia`, dir="/home/ubuntu/tdl-2c2019")
 addprocs(2)
 @everywhere using Distributed
 @everywhere using PyCall
