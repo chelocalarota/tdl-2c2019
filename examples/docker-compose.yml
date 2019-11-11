@@ -1,0 +1,8 @@
+datascience-notebook:
+    image:            jupyter/datascience-notebook
+    # build: .
+    ports:
+      - 8888:8888
+    container_name:   datascience-notebook-container
+    volumes:
+      - /media/LinArchivos/FACU/TDL/docker-pruebas/nbs:/home/jovyan/work
